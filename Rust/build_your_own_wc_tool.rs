@@ -50,16 +50,16 @@ fn result(command: String, file_name: String) -> String {
             +"\t"+&contents.split_whitespace().count().to_string();
         }
         "c" => {
-            return contents.len().to_string();      //OK
+            return contents.len().to_string();      //字节数
         }
         "l" => {
-            return contents.lines().count().to_string();    //OK
+            return contents.lines().count().to_string();    //行数
         }
         "w" => {
-            return contents.split_whitespace().count().to_string();     //OK
+            return contents.split_whitespace().count().to_string();     //单词数
         }
         "m" => {
-            return contents.chars().count().to_string();
+            return contents.chars().count().to_string();    //字符数
         }
         _ => {
             return "Invalid command".to_string();
