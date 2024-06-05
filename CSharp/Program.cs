@@ -22,6 +22,13 @@ class Program
             }
         } else {
             Console.WriteLine("No arguments provided.");
+            string loopcontents = ReadFromStandardInput();
+            string loopcomplete = result(command, loopcontents, file);
+            if (!string.IsNullOrEmpty(loopcomplete))
+            {
+                Console.WriteLine(loopcomplete);
+            }
+            return;
         }
         
         if(string.IsNullOrEmpty(command)) {
@@ -31,11 +38,12 @@ class Program
         string contents=string.Empty;
         Console.WriteLine("Command: "+command+", File: "+file);      //OK
         if (string.IsNullOrEmpty(file)) {
-            string? line=null;
-            while ((line = Console.ReadLine()) != null)  
-            {  
-                contents += line + Environment.NewLine; // 保留换行符  
-            }  
+            contents=ReadFromStandardInput();
+            // string? line=null;
+            // while ((line = Console.ReadLine()) != null)  
+            // {  
+            //     contents += line + Environment.NewLine; // 保留换行符  
+            // }  
             // Console.WriteLine(contents); // 输出全部内容  
         } else {
             try
@@ -47,6 +55,7 @@ class Program
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading file: {ex.Message}");
+                return;
             }
             // using(FileStream fileStream = new FileStream(file, FileMode.Open)){
             //     byte[] buffer = new byte[1024];
@@ -62,6 +71,16 @@ class Program
             Console.WriteLine(complete);
         }
     }
+    static string ReadFromStandardInput()
+    {
+        StringBuilder builder = new StringBuilder();
+        string? line=null;
+        while ((line = Console.ReadLine()) != null)
+        {
+            builder.AppendLine(line);
+        }
+        return builder.ToString();
+    }
     // public static class EncodingExtensions
     // {
     //     public static Encoding UTF8WithoutBOM => new UTF8Encoding(false);
@@ -69,10 +88,11 @@ class Program
     static string result(string command, string contents, string file){
         string result=string.Empty;
         result+="\t";
-        bool should_output=true;
-        if(string.IsNullOrEmpty(contents)) {
-            should_output=false;
-        }
+        // bool should_output=true;
+        // if(string.IsNullOrEmpty(contents)) {
+        //     should_output=false;
+        // }
+        bool should_output = !string.IsNullOrEmpty(contents);
         foreach (char ch in command) {
             // if(ch=='c'){
             //     result+=contents.Length+"\t";
@@ -86,17 +106,28 @@ class Program
             switch (ch) // 使用switch-case替代错误的条件语句
             {
             case 'c':{
-                if (!string.IsNullOrEmpty(file))
-                {
-                        FileInfo fileInfo = new FileInfo(file);
-                        result += fileInfo.Length + "\t"; // 输出文件大小
-                }
+                // if (!string.IsNullOrEmpty(file))
+                // {
+                //     result += new FileInfo(file).Length + "\t";
+                // }
+                // else
+                // {
+                //     result += contents.Length + "\t";
+                // }
+
+                // if (!string.IsNullOrEmpty(file))
+                // {
+                //         FileInfo fileInfo = new FileInfo(file);
+                //         result += fileInfo.Length + "\t"; // 输出文件大小
+                // }
+
                 // long fileSize=0;
                 // if(!string.IsNullOrEmpty(contents)) {
                 //     fileInfo=new FileInfo(file);
                 //     fileSize=fileInfo.Length;
                 // }
                 // result+=fileSize+"\t"; // 文件大小使用Length属性
+                result+=contents.Length+"\t";
                 break;
             }
             case 'l':
@@ -106,11 +137,10 @@ class Program
             case 'w':
                 result += contents.Split(new char[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length + "\t"; // 分割并去除空白项计数
                 break;
-            case 'm': // 假设'm'是想统计单词数，但标准wc工具没有此功能，这里模拟处理
+            case 'm': 
                 // contents = File.ReadAllText(file, new UTF8Encoding(false));
                 // result += contents.Length + "\t";
                 // result+=contents.Length + "\t"; // 输出文件大小
-                // result+=contents.char().Length+"\t";
 
                 // using (StreamReader reader = new StreamReader(file))
                 // {
@@ -127,6 +157,8 @@ class Program
                 //     // Console.WriteLine("Number of characters in the file: " + characterCount);
                 //     result += characterCount + "\t"; // 输出文件大小
                 // }
+
+                result+=contents.Length + "\t"; // 输出文件大小
 
                 break;
             default:
@@ -189,6 +221,26 @@ class Program
 //     0 个错误
 
 // 已用时间 00:00:00.43
-// douxiaobo@192 CSharp % ./bin/Debug/net8.0/CSharp ./test.txt -m
+// douxiaobo@192 CSharp % ./bin/Debug/net8.0/CSharp ./test.txt -m      错
 // Command: m, File: ./test.txt
 // 	339291	./test.txt
+
+// douxiaobo@192 build_your_own_wc_tool % cat test.txt | ./bin/Debug/net8.0/CSharp -c
+// zsh: no such file or directory: ./bin/Debug/net8.0/CSharp
+// cat: test.txt: No such file or directory
+// douxiaobo@192 build_your_own_wc_tool % 
+
+
+// douxiaobo@192 CSharp % cat test.txt | ./bin/Debug/net8.0/CSharp -w     对
+// Command: w, File: 
+// 	58164	
+// douxiaobo@192 CSharp % cat test.txt | ./bin/Debug/net8.0/CSharp -c       错
+// Command: c, File: 
+// 	332147	
+// douxiaobo@192 CSharp % cat test.txt | ./bin/Debug/net8.0/CSharp -l       对
+// Command: l, File: 
+// 	7145	
+// douxiaobo@192 CSharp % cat test.txt | ./bin/Debug/net8.0/CSharp -m       错
+// Command: m, File: 
+// 	332147	
+// douxiaobo@192 CSharp % 
