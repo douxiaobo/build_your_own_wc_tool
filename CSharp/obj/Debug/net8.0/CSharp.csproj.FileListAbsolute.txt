@@ -1,0 +1,15 @@
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/bin/Debug/net8.0/CSharp
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/bin/Debug/net8.0/CSharp.deps.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/bin/Debug/net8.0/CSharp.runtimeconfig.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/bin/Debug/net8.0/CSharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/bin/Debug/net8.0/CSharp.pdb
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.AssemblyInfoInputs.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.AssemblyInfo.cs
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.csproj.CoreCompileInputs.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.sourcelink.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/refint/CSharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.pdb
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/CSharp.genruntimeconfig.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/CSharp/obj/Debug/net8.0/ref/CSharp.dll
