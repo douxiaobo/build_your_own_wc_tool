@@ -1,3 +1,4 @@
-./Cshap/obj/
+# 忽略 CSharp 目录下的 obj 和 bin 文件夹 
+CShap/obj/
 
-./Cshap/bin/
+CShap/bin/
