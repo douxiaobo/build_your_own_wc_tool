@@ -1,0 +1,15 @@
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/bin/Debug/net8.0/own_cat_csharp
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/bin/Debug/net8.0/own_cat_csharp.deps.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/bin/Debug/net8.0/own_cat_csharp.runtimeconfig.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/bin/Debug/net8.0/own_cat_csharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/bin/Debug/net8.0/own_cat_csharp.pdb
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.AssemblyInfoInputs.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.AssemblyInfo.cs
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.csproj.CoreCompileInputs.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.sourcelink.json
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/refint/own_cat_csharp.dll
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.pdb
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/own_cat_csharp.genruntimeconfig.cache
+/Users/douxiaobo/Documents/Coding/Practice in Coding/build_your_own_wc_tool/own_cat_csharp/obj/Debug/net8.0/ref/own_cat_csharp.dll
