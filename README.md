@@ -19,7 +19,10 @@
 > refused have "a" as a default value<br>
 > eprintln! 
 
-
+#### Dive deeper: June 8: suggestion from Teo
+> file does not have an extension
+> ".lines()" method, I don't know it, and never do it.
+> calculate all of these results at the same time
 
 ## Uncomplete:
 
