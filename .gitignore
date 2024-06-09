@@ -3,6 +3,6 @@ CSharp/obj/
 
 CSharp/bin/
 
-obj/
+**/obj/
 
-bin/
+**/bin/
