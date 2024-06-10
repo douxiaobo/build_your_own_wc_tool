@@ -12,9 +12,10 @@ class Program
     static int charCount;
     static string contents = string.Empty;
     static string file_name = string.Empty;
+    static string command=string.Empty;
+
     static void Main(string[] args)
     {
-        string command = string.Empty;
         if (args.Length > 0)
         {
             foreach (var arg in args)
@@ -27,52 +28,107 @@ class Program
                 {
                     file_name = arg;
                     AnalyzeFile(arg);
-                }
+                } 
             }
         }
-        else
+        if (file_name == string.Empty)  //if(string.IsNullOrEmpty(file_name))
         {
             AnalyzeStandardInput();
         }
-        if (string.IsNullOrEmpty(command))
-        {
-            command = "lwc";
-        }
         Console.WriteLine(result(command));
-        // string complete = result(command);
-        // if (!string.IsNullOrEmpty(complete))
-        // {
-        //     Console.WriteLine(complete);
-        // }
     }
     static void AnalyzeFile(string filePath)
     {
         // 读取文件内容并分析
-        var fileInfo = new FileInfo(filePath);
-        byteCount = fileInfo.Length; // 字节数
-        var fileContent = File.ReadAllLines(filePath);
-        AnalyzeContent(string.Join("\n", fileContent), fileContent);
+        // var fileInfo = new FileInfo(filePath);
+        // byteCount = fileInfo.Length; // 字节数
+        // var fileContent = File.ReadAllLines(filePath);
+        // AnalyzeContent(string.Join("\n", fileContent), fileContent);
+
+        // 读取文件并分析
+        file_name = filePath;
+        byteCount = new FileInfo(filePath).Length; // 获取文件字节数
+        AnalyzeContent(File.ReadAllText(filePath));
     }
 
     static void AnalyzeStandardInput()
     {
-        // 从标准输入读取所有行
-        string input = Console.In.ReadToEnd();
-        byteCount = Encoding.UTF8.GetByteCount(input); // 字节数
-        var inputLines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-        AnalyzeContent(input, inputLines);
+        // // 从标准输入读取所有行
+        // string input = Console.In.ReadToEnd();
+        // byteCount = Encoding.UTF8.GetByteCount(input); // 字节数
+        // var inputLines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        // AnalyzeContent(input, inputLines);
+
+        // 从标准输入读取所有内容
+        // string input = Console.In.ReadToEnd();
+        // byteCount = Encoding.UTF8.GetByteCount(input); // 计算输入的字节数
+        // AnalyzeContent(input);
+
+        // string line=string.Empty;
+        // var inputBuilder = new StringBuilder();
+        // byteCount = 0;
+        // while ((line = Console.ReadLine()) != null)
+        // {
+        //     inputBuilder.Append(line);
+        //     inputBuilder.Append(Environment.NewLine); // 确保保留换行符
+        //     byteCount += Encoding.UTF8.GetByteCount(line) + Environment.NewLine.Length; // 更新字节数
+        // }
+        // AnalyzeContent(inputBuilder.ToString());
+
+        // string inputLine;
+        // var inputBuilder = new StringBuilder();
+        // while ((inputLine = Console.ReadLine()) != null)
+        // {
+        //     inputBuilder.AppendLine(inputLine); // 包括换行符
+        //     byteCount += Encoding.UTF8.GetByteCount(inputLine) + 1; // 包括换行符的字节数
+        // }
+        // AnalyzeContent(inputBuilder.ToString());
+
+        // 获取 Console.In 的底层 Stream
+        Stream inputStream = Console.OpenStandardInput();
+        int input;
+        List<byte> inputBytes = new List<byte>();
+        while ((input = inputStream.ReadByte()) != -1) // 逐字节读取直到输入结束
+        {
+            inputBytes.Add((byte)input);
+        }
+
+        // 计算字节数
+        byteCount = inputBytes.Count;
+
+        // 将字节转换为字符串
+        var memoryStream = new MemoryStream(inputBytes.ToArray());
+        using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
+        {
+            string inputContent = reader.ReadToEnd();
+            AnalyzeContent(inputContent);
+        }
     }
-    static void AnalyzeContent(string content, string[] lines)
+    // static void AnalyzeContent(string content, string[] lines)
+    // {
+    //     lineCount = lines.Length; // 行数
+    //     wordCount = lines.Sum(line => line.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length); // 单词数
+    //     // charCount = lines.Sum(line => line.Length) - lines.Length; // 字符数（减去换行符的数量）
+    //     // 正确的字符数计算，包括换行符
+    //     charCount = content.Length;
+    //     contents = content;
+    // }
+
+    static void AnalyzeContent(string content)
     {
-        lineCount = lines.Length; // 行数
-        wordCount = lines.Sum(line => line.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length); // 单词数
-        // charCount = lines.Sum(line => line.Length) - lines.Length; // 字符数（减去换行符的数量）
-        // 正确的字符数计算，包括换行符
+        // 计算行数、单词数和字符数
+        lineCount = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
+        wordCount = content.Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
         charCount = content.Length;
-        contents = content;
     }
+
     static string result(string command)
     {
+        if (string.IsNullOrEmpty(command))
+        {
+            command = "lwc";
+        }
+        // Console.WriteLine("Command:"+command);
         string result = string.Empty;
         result += "\t";
         foreach (var ch in command)
@@ -96,15 +152,9 @@ class Program
                     break;
             }
         }
-        return result + file_name;
-        // if (!string.IsNullOrEmpty(contents))
-        // {
-        //     return result + (string.IsNullOrEmpty(contents) ? "" : file_name);
-        // }
-        // else
-        // {
-        //     return "";
-        // }
+         result = result.TrimEnd('\t'); // 移除尾部的制表符
+        return result + (!string.IsNullOrEmpty(file_name) ? $"\t{file_name}" : "");
+        // return result + file_name;
     }
 }
 
@@ -122,3 +172,17 @@ class Program
 // douxiaobo@192 Csharp2 % zed.
 // douxiaobo@192 Csharp2 % dotnet run test.txt -clwm
 // 	342190	7145	58164	317856	test.txt
+
+// douxiaobo@192 Csharp2 % cat test.txt | ./bin/Debug/net8.0/Csharp2 -clwm
+// Command:clwm
+// 	342190	7146	58164	339291	
+// douxiaobo@192 Csharp2 % ./bin/Debug/net8.0/Csharp2 -clwm                        //这行是死循环
+
+// douxiaobo@192 Csharp2 % ./bin/Debug/net8.0/Csharp2 -clwm test.txt
+// Command:clwm
+// 	342190	7146	58164	339291		test.txt
+// douxiaobo@192 Csharp2 % ./bin/Debug/net8.0/Csharp2                           //这行是死循环
+
+// douxiaobo@192 Csharp2 % ./bin/Debug/net8.0/Csharp2 test.txt
+// Command:lwc
+// 	7146	58164	342190		test.txt
