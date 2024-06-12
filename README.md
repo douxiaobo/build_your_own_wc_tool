@@ -14,6 +14,8 @@
 
 - Difficult within BufReader and line(), June 11,2024.<br>
 
+- Difficult within charcount and bytescount, June 12, 2024. <br>
+
 #### Dive deeper: June 4: May within
 > stdin.lock()<br>
 > BufReader<br>
