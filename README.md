@@ -16,6 +16,8 @@
 
 - Difficult within charcount and bytescount, June 12, 2024. <br>
 
+- Complete and Success whthin charcount and bytescount, June 14, 2024. <br>
+
 #### Dive deeper: June 4: May within
 > stdin.lock()<br>
 > BufReader<br>
