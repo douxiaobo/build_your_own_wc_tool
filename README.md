@@ -18,6 +18,8 @@
 
 - Complete and Success whthin charcount and bytescount, June 14, 2024. <br>
 
+- June 16, 2024: the first use nightly and benchmarks. Thanks to Teo for the suggestion.<br>
+
 #### Dive deeper: June 4: May within
 > stdin.lock()<br>
 > BufReader<br>
