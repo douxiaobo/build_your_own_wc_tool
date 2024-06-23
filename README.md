@@ -20,6 +20,8 @@
 
 - June 16, 2024: the first use nightly and benchmarks. Thanks to Teo for the suggestion.<br>
 
+- June 23, 2024: Complete and Success within split.<br>
+
 #### Dive deeper: June 4: May within
 > stdin.lock()<br>
 > BufReader<br>
