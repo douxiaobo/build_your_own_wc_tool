@@ -22,21 +22,24 @@
 
 - June 23, 2024: Complete and Success within split.<br>
 
-#### Dive deeper: June 4: May within
+#### Dive deeper: June 4,2024: May within
 > stdin.lock()<br>
 > BufReader<br>
 > several arguments<br>
 > refused have "a" as a default value<br>
 > eprintln!
 
-#### Dive deeper: June 8: suggestion from Teo
+#### Dive deeper: June 8,2024: suggestion from Teo
 > file does not have an extension<br>
 > ".lines()" method, I don't know it, and never do it.<br>
 > calculate all of these results at the same time<br>
 
+### Go
+> Finish the wc tool on June 24, 2024.<br>
+
 ## Uncomplete:
 
-### Go
+
 
 ### Python
 
