@@ -22,6 +22,8 @@
 
 - June 23, 2024: Complete and Success within split.<br>
 
+- JUne 25, 2024: modify code <br>
+
 #### Dive deeper: June 4,2024: May within
 > stdin.lock()<br>
 > BufReader<br>
