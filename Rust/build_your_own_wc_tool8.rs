@@ -1,72 +1,76 @@
 use std::env;
-use std::io::{self, BufReader, BufRead};
+use std::io::{self,BufReader,BufRead};
 use std::fs;
 
 struct File {
     file_name: String,
-    linecount: u32,
-    charcount: u32,
-    wordcount: u32,
-    bytescount: u32,
+    linecount:u32,
+    charcount:u32,
+    wordcount:u32,
+    bytescount:u32,
 }
-
 impl File {
     fn new(file: String, reader: &mut dyn BufRead) -> Result<File, io::Error> {
-        let mut linecount_tmp = 0;
-        let mut charcount_tmp = 0;
-        let mut wordcount_tmp = 0;
-        let mut bytescount_tmp = 0;
+        let mut linecount = 0;
+        let mut charcount = 0;
+        let mut wordcount = 0;
+        let mut bytescount = 0;
         let mut current_word = false;
+        let mut buffer = Vec::new();
 
-        let mut as_bytes=0;
+        loop {
+            let bytes_read = reader.read_until(b'\n', &mut buffer)?;
+            if bytes_read == 0 {
+                break; // EOF reached
+            }
 
-        for line_result in reader.split(b'\n') {
-            let line_bytes = line_result?;
-            let line_str = std::str::from_utf8(&line_bytes)
-                .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+            linecount += 1;
+            let line_str = std::str::from_utf8(&buffer[..bytes_read - 1]).unwrap_or_default(); // Skip newline
+            
+            // Count characters, excluding newline
+            charcount += line_str.chars().count() as u32 +1;
 
-            linecount_tmp += 1;
-            bytescount_tmp += line_bytes.len() as u32 + 1;
-
+            // Word count logic remains similar
             for ch in line_str.chars() {
-                charcount_tmp += 1;
                 if ch.is_whitespace() {
                     if current_word {
-                        wordcount_tmp += 1; // 单词计数加一
-                        current_word = false; // 重置单词标记
+                        wordcount += 1;
+                        current_word = false;
                     }
                 } else {
-                    current_word = true; // 在单词内部
+                    current_word = true;
                 }
             }
-            // 如果当前处于单词中，单词计数加一
             if current_word {
-                wordcount_tmp += 1;
+                wordcount += 1;
                 current_word = false;
             }
-            charcount_tmp += 1; // 换行符也算一个字符
+
+            // Adjust bytes count to exclude newline
+            bytescount += bytes_read as u32;
+            // Reset buffer for next iteration
+            buffer.clear();
         }
 
         Ok(File {
             file_name: file,
-            linecount: linecount_tmp,
-            charcount: charcount_tmp,
-            wordcount: wordcount_tmp,
-            bytescount: bytescount_tmp,
+            linecount,
+            charcount,
+            wordcount,
+            bytescount,
         })
     }
 }
-
 fn main() -> Result<(), io::Error> {
     let mut command = String::new();
-    let mut file_path = String::new();
-    let args: Vec<String> = env::args().collect();
+    let mut file_path=String::new();
+    let args:Vec<String>=env::args().collect();
 
     let mut iter = args.iter();
     iter.next(); // skip the program name
     for arg in iter {
         if arg.starts_with("-") {
-            command += arg.get(1..).unwrap();
+            command+=arg.get(1..).unwrap();
         } else {
             match is_file(arg) {
                 Ok(is_file) => {
@@ -80,11 +84,10 @@ fn main() -> Result<(), io::Error> {
                 Err(err) => {
                     eprintln!("Error: {}", err);
                     std::process::exit(1);
-                },
+                } ,
             }
         }
     }
-
     let file = if file_path.is_empty() {
         File::new(file_path.clone(), &mut BufReader::new(io::stdin()))?
     } else {
@@ -92,7 +95,7 @@ fn main() -> Result<(), io::Error> {
     };
 
     if command.is_empty() {
-        println!("\t{}\t{}\t{}\t{}", file.linecount, file.wordcount, file.bytescount, file.file_name)
+        println!("\t{}\t{}\t{}\t{}\t", file.linecount, file.wordcount, file.bytescount, file.file_name)
     } else {
         for ch in command.chars() {
             match ch {
@@ -106,7 +109,7 @@ fn main() -> Result<(), io::Error> {
                 }
             }
         }
-        println!("\t{}", file.file_name);
+        println!("/t{}",file.file_name);
     }
     Ok(())
 }
@@ -115,3 +118,14 @@ fn is_file(path: &str) -> Result<bool, io::Error> {
     let metadata = fs::metadata(path)?;
     Ok(metadata.file_type().is_file())
 }
+
+// douxiaobo@192 Rust % rustc build_your_own_wc_tool3.rs
+// douxiaobo@192 Rust % ./build_your_own_wc_tool3 ./test.txt
+// 	7145	58164	342190	./test.txt	
+// douxiaobo@192 Rust % ./build_your_own_wc_tool3 ./test.txt -clwm
+// 	342190	7145	58164	339292./test.txt
+// douxiaobo@192 Rust % cat ./test.txt | .build_your_own_wc_tool3 
+// zsh: command not found: .build_your_own_wc_tool3
+// douxiaobo@192 Rust % cat ./test.txt | ./build_your_own_wc_tool3
+// 	7145	58164	342190		
+// douxiaobo@192 Rust % 

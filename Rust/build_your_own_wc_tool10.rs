@@ -18,25 +18,23 @@ impl File {
         let mut bytescount_tmp = 0;
         let mut current_word = false;
 
-        let mut as_bytes=0;
+        let mut contents = String::new();
+        reader.read_to_string(&mut contents)?;
 
-        for line_result in reader.split(b'\n') {
-            let line_bytes = line_result?;
-            let line_str = std::str::from_utf8(&line_bytes)
-                .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+        bytescount_tmp += contents.len() as u32;
+        charcount_tmp += contents.chars().count() as u32;
 
+        for line in contents.lines() {
             linecount_tmp += 1;
-            bytescount_tmp += line_bytes.len() as u32 + 1;
 
-            for ch in line_str.chars() {
-                charcount_tmp += 1;
+            for ch in line.chars() {
                 if ch.is_whitespace() {
                     if current_word {
-                        wordcount_tmp += 1; // 单词计数加一
-                        current_word = false; // 重置单词标记
+                        wordcount_tmp += 1;    // 单词计数加一
+                        current_word = false;   // 重置单词标记
                     }
                 } else {
-                    current_word = true; // 在单词内部
+                    current_word = true;    // 在单词内部
                 }
             }
             // 如果当前处于单词中，单词计数加一
@@ -44,7 +42,6 @@ impl File {
                 wordcount_tmp += 1;
                 current_word = false;
             }
-            charcount_tmp += 1; // 换行符也算一个字符
         }
 
         Ok(File {
@@ -62,16 +59,15 @@ fn main() -> Result<(), io::Error> {
     let mut file_path = String::new();
     let args: Vec<String> = env::args().collect();
 
-    let mut iter = args.iter();
-    iter.next(); // skip the program name
-    for arg in iter {
+    let _ = env::args().skip(1); // skip the program name
+    for arg in args {
         if arg.starts_with("-") {
             command += arg.get(1..).unwrap();
         } else {
-            match is_file(arg) {
+            match is_file(&arg) {
                 Ok(is_file) => {
                     if is_file {
-                        file_path = arg.to_string();
+                        file_path = arg;
                     } else {
                         eprintln!("Error: {} is not a file", arg);
                         std::process::exit(1);
@@ -85,11 +81,24 @@ fn main() -> Result<(), io::Error> {
         }
     }
 
-    let file = if file_path.is_empty() {
-        File::new(file_path.clone(), &mut BufReader::new(io::stdin()))?
-    } else {
-        File::new(file_path.clone(), &mut BufReader::new(fs::File::open(&file_path)?))?
+    let file = match file_path.is_empty() {
+        true => File::new(file_path.clone(), &mut BufReader::new(io::stdin()))?,
+        false => File::new(file_path.clone(), &mut BufReader::new(fs::File::open(&file_path)?))?,
     };
+
+    // let file = if file_path.is_empty() {
+    //     File::new(file_path.clone(), &mut BufReader::new(io::stdin()))?
+    // } else {
+    //     File::new(file_path.clone(), &mut BufReader::new(fs::File::open(&file_path)?))?
+    // };
+
+    // let file = File::new(
+    //     file_path.clone(),
+    //     &mut match file_path.is_empty() {
+    //         true => BufReader::new(io::stdin()),
+    //         false => BufReader::new(fs::File::open(&file_path)?),
+    //     },
+    // )?;
 
     if command.is_empty() {
         println!("\t{}\t{}\t{}\t{}", file.linecount, file.wordcount, file.bytescount, file.file_name)

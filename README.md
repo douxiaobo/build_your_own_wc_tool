@@ -24,6 +24,8 @@
 
 - JUne 25, 2024: modify code <br>
 
+- June 27, 2024: modify code.<br>
+
 #### Dive deeper: June 4,2024: May within
 > stdin.lock()<br>
 > BufReader<br>
