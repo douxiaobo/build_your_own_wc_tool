@@ -26,6 +26,8 @@
 
 - June 27, 2024: modify code.<br>
 
+- June 28, 2024: difficult about cat. <br>
+
 #### Dive deeper: June 4,2024: May within
 > stdin.lock()<br>
 > BufReader<br>
