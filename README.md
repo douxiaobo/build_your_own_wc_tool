@@ -49,6 +49,10 @@
 
 ### Python
 
+### C
+
+July 21: write code for printing command and filename.<br>
+
 ### C++
 
 ### C#
